@@ -11,29 +11,28 @@ class EmployeeRequisition(models.Model):
 
     requisition_line = fields.One2many('employee.requisition.line', 'requisition_id', string='Requisition Line')
 
-
     state = fields.Selection([('draft', 'Draft'), 
-                ('requisition', 'Requisition'),
-                ('approved', 'Approved'),
                 ('confirmed', 'Confirmed'),
-                ('cancelled', 'Cancelled')], 
+                ('approved', 'Approved'),
+                ('ready', 'Ready'),
+                ('received', 'Received')], 
                 default='draft', string='State')
-
-    def action_requisition(self):
-        self.state = 'requisition'
-        self.requisition_state = 'Draft'
-
-    def action_approved(self):
-        self.state = 'approved'
-        self.requisition_state = 'Approved'
 
     def action_confirmed(self):
         self.state = 'confirmed'
         self.requisition_state = 'Confirmed'
 
-    def action_cancelled(self):
-        self.state = 'cancelled'
-        self.requisition_state = 'Cancelled'
+    def action_approved(self):
+        self.state = 'approved'
+        self.requisition_state = 'Approved'
+
+    def action_ready(self):
+        self.state = 'ready'
+        self.requisition_state = 'Ready'
+
+    def action_received(self):
+        self.state = 'received'
+        self.requisition_state = 'Received'
 
 
 class EmployeeRequisitionLine(models.Model):

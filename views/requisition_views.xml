@@ -19,25 +19,28 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button id='button_requisition' name='action_requisition' string='Requisition' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_employee'/>
-                    <button id='button_approved' name='action_approved' string='Approved' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_hr'/>
-                    <button id='button_confirmed' name='action_confirmed' string='Confirmed' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_admin'/>
-                    <button id='button_cancelled' name='action_cancelled' string='Cancelled' type='object' groups='employee_requisition.employee_requisition_user_access_hr'/>
+                    <button id='button_confirmed' name='action_confirmed' string='Confirm' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_employee' states='draft'/>
 
-                    <field name='state' widget='statusbar' statusbar_visible='draft,requisition,approved,confirmed'/>
+                    <button id='button_approved' name='action_approved' string='Approve' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_hr' states='confirmed'/>
+
+                    <button id='button_ready' name='action_ready' string='Ready' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_hr' states='approved'/>
+
+                    <button id='button_received' name='action_received' string='Receive' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_employee' states='ready'/>
+
+                    <field name='state' widget='statusbar' statusbar_visible='draft,confirmed,approved,ready,received'/>
                 </header>
                 <sheet>
                     <group>
-                        <field name="name" required="True"/>
-                        <field name="date" required="True"/>
+                        <field name="name" attrs="{'readonly': [('state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" required="True"/>
+                        <field name="date" attrs="{'readonly': [('state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" required="True"/>
                     </group>
                     <notebook>
                         <page string='Product Requisition'>
                             <field name="requisition_line">
                                 <tree editable='bottom'>
-                                    <field name="product_id" required="True"/>
-                                    <field name="product_qty" required="True"/>
-                                    <field name="requisition_id" invisible='1'/>
+                                    <field name="product_id" attrs="{'readonly': [('parent.state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" required="True"/>
+                                    <field name="product_qty" attrs="{'readonly': [('parent.state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" required="True"/>
+                                    <field name="requisition_id" attrs="{'readonly': [('parent.state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" invisible='1'/>
                                 </tree>
                                 <form>
                                     <group>
