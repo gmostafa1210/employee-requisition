@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='employee_requisition_user_access' model='ir.module.category'>
+        <field name='name'>Employee Requisition</field>
+        <field name='sequence'>1</field>
+    </record>
+
+    <record id='employee_requisition_user_access_employee' model='res.groups'>
+        <field name='name'>Employee</field>
+        <field name='implied_ids' eval='[(4, ref("base.group_user"))]'/>
+        <field name='category_id' ref='employee_requisition.employee_requisition_user_access'/>
+        <field name='users' eval='[(4, ref("base.user_admin"))]'/>
+    </record>
+
+    <record id='employee_requisition_user_access_hr' model='res.groups'>
+        <field name='name'>HR Department</field>
+        <field name='implied_ids' eval='[(4, ref("employee_requisition.employee_requisition_user_access_employee"))]'/>
+        <field name='category_id' ref='employee_requisition.employee_requisition_user_access'/>
+        <field name='users' eval='[(4, ref("base.user_admin"))]'/>
+    </record>
+
+    <record id='employee_requisition_user_access_admin' model='res.groups'>
+        <field name='name'>Administrator</field>
+        <field name='implied_ids' eval='[(4, ref("employee_requisition.employee_requisition_user_access_hr"))]'/>
+        <field name='category_id' ref='employee_requisition.employee_requisition_user_access'/>
+        <field name='users' eval='[(4, ref("base.user_admin"))]'/>
+    </record>
+
+</odoo>
