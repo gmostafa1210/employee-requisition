@@ -8,6 +8,7 @@
             <tree>
                 <field name="name"/>
                 <field name="date"/>
+                <field name="requisition_state"/>
             </tree>
         </field>
     </record>
@@ -17,6 +18,14 @@
         <field name="model">employee.requisition</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button id='button_requisition' name='action_requisition' string='Requisition' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_employee'/>
+                    <button id='button_approved' name='action_approved' string='Approved' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_hr'/>
+                    <button id='button_confirmed' name='action_confirmed' string='Confirmed' type='object' class='btn-primary' groups='employee_requisition.employee_requisition_user_access_admin'/>
+                    <button id='button_cancelled' name='action_cancelled' string='Cancelled' type='object' groups='employee_requisition.employee_requisition_user_access_hr'/>
+
+                    <field name='state' widget='statusbar' statusbar_visible='draft,requisition,approved,confirmed'/>
+                </header>
                 <sheet>
                     <group>
                         <field name="name" required="True"/>
