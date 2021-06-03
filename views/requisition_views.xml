@@ -36,11 +36,11 @@
                     </group>
                     <notebook>
                         <page string='Product Requisition'>
-                            <field name="requisition_line">
+                            <field name="requisition_line" attrs="{'readonly': [('state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}">
                                 <tree editable='bottom'>
-                                    <field name="product_id" attrs="{'readonly': [('parent.state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" required="True"/>
-                                    <field name="product_qty" attrs="{'readonly': [('parent.state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" required="True"/>
-                                    <field name="requisition_id" attrs="{'readonly': [('parent.state', 'in', ('confirmed', 'approved', 'ready', 'received'))]}" invisible='1'/>
+                                    <field name="product_id" required="True"/>
+                                    <field name="product_qty" required="True"/>
+                                    <field name="requisition_id" invisible='1'/>
                                 </tree>
                                 <form>
                                     <group>
